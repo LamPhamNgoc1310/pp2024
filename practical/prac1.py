@@ -25,12 +25,12 @@ def courseNumber():
     #return the number of students to main
     return c 
 
-
 def courseInfo(courseNumber):
     for _ in range(courseNumber):
         id = int(input("Course ID: "))
         name = input("Course Name: ")
         course[id] = name
+    
     
 def setScore():
     print("-------Score insertion-------")
