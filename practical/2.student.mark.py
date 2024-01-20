@@ -6,20 +6,17 @@ class Student:
         self.__score = {}
     def setScore(self, course_id, score):
         self.__score[course_id] = score
-
+    def getScore(self):
+        return self.__score
     def displayInfo(self):
-        print(f"""Student ID: {self.id} 
-        Student name: {self.name} 
-        DOB: {self.dob} """)
+        print(f"Student ID: {self.id}\nStudent name: {self.name}\nDOB: {self.dob}")
 class Course:
     def __init__(self, id, name):
         self.__id = id
         self.name = name
         # self.studentNumber = studentNumber
     def displayInfo(self):
-        print(f""" --------------
-        Course ID: {self.__id} 
-        Course Name: {self.name}""")
+        print(f" -------------- \nCourse ID: {self.__id} \nCourse Name: {self.name}")
         
 students = []
 courses = {}
@@ -35,7 +32,7 @@ coursesNumber = int(input("Number of courses: "))
 for _ in range(coursesNumber):
         code = input("Course ID: ")
         name = input("Course Name: ")
-        courses[code] = name
+        courses[code] = Course(code, name)
 
 print("-------Score insertion-------")
 
@@ -50,10 +47,15 @@ for student in students:
 for student in students:
     student.displayInfo()
 
-for course in courses:
-    student.displayInfo()
+for course in courses.values():
+    course.displayInfo()
 
+# id = int(input("Student ID: "))
+# for student in students:
+#     if student.id == id:
+#         print(f"Student {student.id} scored {student.score}")
+    
 id = int(input("Student ID: "))
 for student in students:
     if student.id == id:
-        print(f"Student {student.id} scored {student.score}")
+        print(f"Scores: {student.getScore()}")
