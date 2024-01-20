@@ -15,8 +15,18 @@ class Course:
     def __init__(self, id, name, studentNumber):
         self.id = id
         self.name = name
-        self.studentNumber = studentNumber
+        # self.studentNumber = studentNumber
     def displayInfo(self):
-        print(f"""Course ID: {self.id} 
-              Course Name: {self.name} 
-              Course Students Number: {self.studentNumber}""")
+        print(f""" --------------
+              Course ID: {self.id} 
+              Course Name: {self.name}""")
+        
+students = []
+courses = {}
+
+studentsNumber = int(input("Number of students: "))
+for _ in range(studentsNumber):
+    id = int(input("Student ID: "))
+    name = input("Student Name: ")
+    dob = input("DOB: ")
+    students.append(Student(id, name, dob))
