@@ -12,5 +12,11 @@ class Student:
               Student name: {self.name} 
               DOB: {self.dob} """)
 class Course:
-    def __init__(self):
+    def __init__(self, id, name, studentNumber):
         self.id = id
+        self.name = name
+        self.studentNumber = studentNumber
+    def displayInfo(self):
+        print(f"""Course ID: {self.id} 
+              Course Name: {self.name} 
+              Course Students Number: {self.studentNumber}""")
