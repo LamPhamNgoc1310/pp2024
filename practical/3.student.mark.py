@@ -16,8 +16,11 @@ class Student:
         Student name: {self.name}
         DOB: {self.dob}""")
     def calGPA(self, score):
-        self.__gpa = np.mean(score)
-    def getGPA(self):
+        sum = 0
+        for i in range(len(self.__score)):
+            sum += self.__score[i]
+            if i+1 == len(self.__score):
+                self.__gpa = sum/len(self.__score)
         return self.__gpa
 
 class Course:
@@ -59,7 +62,7 @@ for _ in range(studentsNumber):
         #     id = input("Student ID: ")
         if student.id == id:
             student.setScore(course_code, math.floor(score))
-
+            
 
 for student in students:
     student.displayInfo()
