@@ -34,8 +34,8 @@ class Course:
         Course Name: {self.name}""")
         
 students = np.array([])
-# courses = {}
-courses = []
+courses = {}
+# courses = []
 
 # INPUT STUDENTS INFO 
 studentsNumber = int(input("Number of students: "))
