@@ -5,9 +5,9 @@ class Student:
         self.id = id
         self.name = name
         self.dob = dob
-        self.__score = {}
+        self.__score = []
         self.__gpa = None
-    def setScore(self, course_id, score):
+    def setScore(self, course_id:int, score):
         self.__score[course_id] = score
     def getScore(self):
         return self.__score
@@ -24,18 +24,20 @@ class Student:
         return self.__gpa
 
 class Course:
-    def __init__(self, id, name):
+    def __init__(self, id:int, name):
         self.__id = id
         self.name = name
         # self.studentNumber = studentNumber
     def displayInfo(self):
         print(f""" --------------
-        Course ID: {self.__id}
+        Course ID: {self.__id+1}
         Course Name: {self.name}""")
         
 students = np.array([])
-courses = {}
+# courses = {}
+courses = []
 
+# INPUT STUDENTS INFO 
 studentsNumber = int(input("Number of students: "))
 for _ in range(studentsNumber):
     # id = int(input("Student ID: "))
@@ -44,18 +46,20 @@ for _ in range(studentsNumber):
     dob = input("DOB: ")
     students = np.append(students,Student(id, name, dob))
 
+# INPUT COURSES INFO
+print("-----------------------------")
 coursesNumber = int(input("Number of courses: "))
 for _ in range(coursesNumber):
-        code = input("Course Code: ")
+        code = int(input("Course Code: "))
         name = input("Course Name: ")
-        courses[code] = Course(code, name)
+        courses[code-1] = Course(code, name)
 
+# INSERTING SCORES
 print("-------Score insertion-------")
-
 for _ in range(studentsNumber):
     # id = int(input("Student ID: "))
     id = input("Student ID: ")
-    course_code = input("Course Code: ")
+    course_code = int(input("Course Code: "))
     score = float(input("Score: "))
     for student in students:
         # while id != students[student].id:
@@ -74,7 +78,8 @@ for course in courses.values():
 # for student in students:
 #     if student.id == id:
 #         print(f"Student {student.id} scored {student.score}")
-    
+
+# DISPLAYING THE GPA   
 for student in students:
     student.calGPA(student.getScore())
     
