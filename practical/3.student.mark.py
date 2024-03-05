@@ -1,97 +1,100 @@
-import math
+import math as m
 import numpy as np
+
+# The Student class
 class Student:
-    def __init__(self, id, name, dob):
+    def __init__(self, id:str, name:str, dob:int):
         self.id = id
         self.name = name
         self.dob = dob
-        self.__score = []
-        self.__gpa = None
-    def setScore(self, course_id:int, score):
+        self.__score = {}
+    def setScore(self, course_id, score):
         self.__score[course_id] = score
     def getScore(self):
         return self.__score
     def displayInfo(self):
-        print(f"""Student ID: {self.id}
-        Student name: {self.name}
-        DOB: {self.dob}""")
-    def calGPA(self, score):
-        sum = 0
-        for i in range(len(self.__score)):
-            sum += self.__score[i]
-            if i+1 == len(self.__score):
-                self.__gpa = sum/len(self.__score)
-        return self.__gpa
+        return f"---------\n{self.id} - {self.name}"
 
+# The Course class 
 class Course:
-    def __init__(self, id:int, name):
-        self.__id = id
+    def __init__(self, id:str, name:str):
+        self.id = id
         self.name = name
-        # self.studentNumber = studentNumber
     def displayInfo(self):
-        print(f""" --------------
-        Course ID: {self.__id+1}
-        Course Name: {self.name}""")
-        
-students = np.array([])
-courses = {}
-# courses = []
-
-# INPUT STUDENTS INFO 
-studentsNumber = int(input("Number of students: "))
-for _ in range(studentsNumber):
-    # id = int(input("Student ID: "))
-    id = input("Student ID: ")
-    name = input("Student Name: ")
-    dob = input("DOB: ")
-    students = np.append(students,Student(id, name, dob))
-
-# INPUT COURSES INFO
-print("-----------------------------")
-coursesNumber = int(input("Number of courses: "))
-for _ in range(coursesNumber):
-        code = int(input("Course Code: "))
-        name = input("Course Name: ")
-        courses[code-1] = Course(code, name)
-
-# INSERTING SCORES
-print("-------Score insertion-------")
-for _ in range(studentsNumber):
-    # id = int(input("Student ID: "))
-    id = input("Student ID: ")
-    course_code = int(input("Course Code: "))
-    score = float(input("Score: "))
-    for student in students:
-        # while id != students[student].id:
-        #     id = input("Student ID: ")
-        if student.id == id:
-            student.setScore(course_code, math.floor(score))
-            
-
-for student in students:
-    student.displayInfo()
-
-for course in courses.values():
-    course.displayInfo()
-
-# id = int(input("Student ID: "))
-# for student in students:
-#     if student.id == id:
-#         print(f"Student {student.id} scored {student.score}")
-
-# DISPLAYING THE GPA   
-for student in students:
-    student.calGPA(student.getScore())
+        return f"---------\n{self.id} - {self.name}"
     
-id = input("Student ID: ")
-for student in students:
-    if student.id == id:
-        student.displayInfo()
-        print(f"Scores: {student.getScore()}")
-        print(f"GPA: {student.getGPA()}")
+class Management:
+    # initialize the student and course list
+    def __init__(self):
+        self.students = []
+        self.courses = []
 
+    # enter the student info
+    def inputStudentInfo(self):
+        studentNum = int(input("Please enter the number of students: "))
+        for _ in range(studentNum):
+            id = input("Please enter the Student ID: ")
+            name = input("Please enter the Student name: ")
+            dob = input("Please enter the Student's DOB: ")
+            self.students.append(Student(id=id, name = name, dob = dob))
 
-# Display students and their GPAs
-for student in students:
-    student.displayInfo()
-    print(f"GPA: {student.getGPA()}")
+    # enter the course info
+    def inputCourseInfo(self):
+        courseNum = int(input("Please enter the number of courses: "))
+        for _ in range(courseNum):
+            id = input("Please enter the Course ID: ")
+            name = input("Please enter the Course name: ")
+            self.courses.append(Course(id=id, name = name))
+
+    # displaying the overall information
+    def displayInfo(self):
+        print("\n---Displaying Information---")
+        for student in self.students:
+            student.displayInfo()
+        for course in self.courses:
+            course.displayInfo()
+    
+    # inputing the scores in the list
+    def inputScore(self):
+        studentID = input("Please enter the Student ID: ")
+        courseID = input("Please enter the Course name: ")
+        score = float(input(f"Please enter the score for {courseID}"))
+        # accessing each elements in students list
+        for student in self.students:
+            if studentID == student.id:
+                student.setScore(courseID, score)
+
+    # displaying all the scores:
+    def displayScores(self):
+        studentID = input("Enter the Student ID ")
+        for student in self.students:
+            if student.id == studentID:
+                print(f"{student.id}: {m.floor(student.getScore)}")
+
+    # make colors
+
+    def userChoices(self):
+        self.inputStudentInfo()
+        self.inputCourseInfo()
+        while True:
+            print("""=================)
+                  1. Entering scores 
+                  2. Display students and courses information
+                  3. Displaying the scores
+                  4. Quit
+                  =================""")
+            choice = input("Choose something...")
+            if choice == "1":
+                self.inputScore()
+            elif choice == "2":
+                self.displayInfo()
+            elif choice == "3":
+                self.displayScores()
+            elif choice == "4":
+                break
+            else:
+                print("Invalid choice")
+
+# main
+main = Management()
+main.userChoices()
