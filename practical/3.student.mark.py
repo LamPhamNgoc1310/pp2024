@@ -57,8 +57,8 @@ class Management:
     # inputing the scores in the list
     def inputScore(self):
         studentID = input("Please enter the Student ID: ")
-        courseID = input("Please enter the Course name: ")
-        score = float(input(f"Please enter the score for {courseID}"))
+        courseID = input("Please enter the Course ID: ")
+        score = float(input(f"Please enter the score for {courseID}: "))
         # accessing each elements in students list
         for student in self.students:
             if studentID == student.id:
@@ -66,10 +66,10 @@ class Management:
 
     # displaying all the scores:
     def displayScores(self):
-        studentID = input("Enter the Student ID ")
+        studentID = input("Enter the Student ID: ")
         for student in self.students:
             if student.id == studentID:
-                print(f"{student.id}: {m.floor(student.getScore)}")
+                print(f"{student.id}: {student.getScore()}")
 
     # make colors
 
@@ -77,12 +77,14 @@ class Management:
         self.inputStudentInfo()
         self.inputCourseInfo()
         while True:
-            print("""=================)
+            print("""
+                  =================
                   1. Entering scores 
                   2. Display students and courses information
                   3. Displaying the scores
                   4. Quit
-                  =================""")
+                  =================
+                  """)
             choice = input("Choose something...")
             if choice == "1":
                 self.inputScore()
