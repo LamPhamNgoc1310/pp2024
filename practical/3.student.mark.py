@@ -13,7 +13,7 @@ class Student:
     def getScore(self):
         return self.__score
     def displayInfo(self):
-        return f"---------\n{self.id} - {self.name}"
+        print(f"---------{self.id} - {self.name} - {self.dob}---------")
 
 # The Course class 
 class Course:
@@ -21,27 +21,30 @@ class Course:
         self.id = id
         self.name = name
     def displayInfo(self):
-        return f"---------\n{self.id} - {self.name}"
+        print(f"---------{self.id} - {self.name}---------")
     
 class Management:
     # initialize the student and course list
     def __init__(self):
-        self.students = []
+        self.students = np.array([])
         self.courses = []
 
     # enter the student info
     def inputStudentInfo(self):
         studentNum = int(input("Please enter the number of students: "))
         for _ in range(studentNum):
+            print("=================================")
             id = input("Please enter the Student ID: ")
             name = input("Please enter the Student name: ")
             dob = input("Please enter the Student's DOB: ")
-            self.students.append(Student(id=id, name = name, dob = dob))
+            numpy_students = Student(id=id, name = name, dob = dob)
+            self.students = np.append(self.students, numpy_students)
 
     # enter the course info
     def inputCourseInfo(self):
         courseNum = int(input("Please enter the number of courses: "))
         for _ in range(courseNum):
+            print("=================================")
             id = input("Please enter the Course ID: ")
             name = input("Please enter the Course name: ")
             self.courses.append(Course(id=id, name = name))
@@ -50,12 +53,15 @@ class Management:
     def displayInfo(self):
         print("\n---Displaying Information---")
         for student in self.students:
+            print("=================================")
             student.displayInfo()
         for course in self.courses:
+            print("=================================")
             course.displayInfo()
     
     # inputing the scores in the list
     def inputScore(self):
+        print("=================================")
         studentID = input("Please enter the Student ID: ")
         courseID = input("Please enter the Course ID: ")
         score = float(input(f"Please enter the score for {courseID}: "))
@@ -69,30 +75,39 @@ class Management:
         studentID = input("Enter the Student ID: ")
         for student in self.students:
             if student.id == studentID:
-                print(f"{student.id}: {student.getScore()}")
+                scores = student.getScore()
+                print("=================================")
+                print(f"{student.id} - {student.name}: ")
+                for course_id, score in scores.items():
+                    print(f"{course_id}:{m.floor(score)}")
 
     # make colors
 
-    def userChoices(self):
-        self.inputStudentInfo()
-        self.inputCourseInfo()
+    def userChoices(self): 
         while True:
             print("""
-                  =================
-                  1. Entering scores 
-                  2. Display students and courses information
-                  3. Displaying the scores
-                  4. Quit
-                  =================
+                    ==============================================
+                  ||0. Quit                                       ||
+                  ||1. Entering Students Information              ||
+                  ||2. Entering Courses Information               ||
+                  ||3. Entering scores                            ||
+                  ||4. Display students and courses information   ||
+                  ||5. Displaying the scores                      ||
+                    ==============================================
                   """)
             choice = input("Choose something...")
             if choice == "1":
-                self.inputScore()
+                self.inputStudentInfo() 
             elif choice == "2":
-                self.displayInfo()
+                self.inputCourseInfo()
             elif choice == "3":
-                self.displayScores()
+                self.inputScore()
             elif choice == "4":
+                self.displayInfo()
+            elif choice == "5":
+                self.displayScores()
+            elif choice == "0":
+                print("Exited")
                 break
             else:
                 print("Invalid choice")
