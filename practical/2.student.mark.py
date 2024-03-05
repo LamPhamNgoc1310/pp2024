@@ -21,7 +21,7 @@ class Course:
     def displayInfo(self):
         return f"---------\n{self.id} - {self.name}"
     
-class Main:
+class Management:
     # initialize the student and course list
     def __init__(self):
         self.students = []
@@ -67,15 +67,15 @@ class Main:
         studentID = input("Enter the Student ID ")
         for student in self.students:
             if student.id == studentID:
-                print(f"{student.id} ")
+                print(f"{student.id}: {student.getScore}")
 
 
     # make colors
-    def userChoices(self):
-        self.inputStudentInfo
-        self.inputCourseInfo
-        while True:
 
+    def userChoices(self):
+        self.inputStudentInfo()
+        self.inputCourseInfo()
+        while True:
             print("""=================)
                   1. Entering scores 
                   2. Display students and courses information
@@ -86,23 +86,14 @@ class Main:
             if choice == "1":
                 self.inputScore()
             elif choice == "2":
-                self.displayStudentsInfo()
+                self.displayInfo()
             elif choice == "3":
-                self.displayInfo
+                self.displayScores()
             elif choice == "4":
                 break
             else:
                 print("Invalid choice")
 
-main = Main()
-main.userChoices 
-        
-        
-
-
-
-
-
-
-
-    
+# main
+main = Management()
+main.userChoices()
