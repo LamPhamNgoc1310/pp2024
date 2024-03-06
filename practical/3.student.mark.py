@@ -8,18 +8,30 @@ class Student:
         self.name = name
         self.dob = dob
         self.__score = {}
+
     def setScore(self, course_id, score):
         self.__score[course_id] = score
     def getScore(self):
         return self.__score
     def displayInfo(self):
         print(f"---------{self.id} - {self.name} - {self.dob}---------")
+    def calGPA(self, creditsDict, weightDict):
+        totalScore = 0
+        totalCred = 0
+        for course_id, score in self.__score.items():
+            if course_id in creditsDict:
+                totalGpa += score * weightDict[course_id]*creditsDict[course_id]
+                totalCred += creditsDict[course_id]
+        self.gpa = totalScore / totalCred
+        return self.gpa
 
 # The Course class 
 class Course:
-    def __init__(self, id:str, name:str):
+    def __init__(self, id:str, name:str, weight:float, credits:int):
         self.id = id
         self.name = name
+        self.credits = credits
+        self.weight = weight
     def displayInfo(self):
         print(f"---------{self.id} - {self.name}---------")
     
@@ -47,18 +59,20 @@ class Management:
             print("=================================")
             id = input("Please enter the Course ID: ")
             name = input("Please enter the Course name: ")
-            self.courses.append(Course(id=id, name = name))
+            weight = float(input("Please enter the weight of the course: "))
+            credits = int(input("Please enter the credits of the course: "))
+            self.courses.append(Course(id=id, name = name, weight= weight, credits=credits))
 
     # displaying the overall information
     def displayInfo(self):
         print("\n---Displaying Information---")
-        for student in self.students:
-            print("=================================")
-            student.displayInfo()
         for course in self.courses:
             print("=================================")
             course.displayInfo()
-    
+        for student in self.students:
+            print("=================================")
+            student.displayInfo()
+
     # inputing the scores in the list
     def inputScore(self):
         print("=================================")
@@ -73,6 +87,10 @@ class Management:
     # displaying all the scores:
     def displayScores(self):
         studentID = input("Enter the Student ID: ")
+        for course in self.courses:
+            creditsDict = {course.id: course.credits}
+        for course in self.courses:
+            weightsDict = {course.id: course.weight}
         for student in self.students:
             if student.id == studentID:
                 scores = student.getScore()
@@ -80,9 +98,10 @@ class Management:
                 print(f"{student.id} - {student.name}: ")
                 for course_id, score in scores.items():
                     print(f"{course_id}:{m.floor(score)}")
+                student.calGPA(creditsDict=creditsDict, weightsDict=weightsDict)
+                print(f"GPA: {student.gpa}")
 
     # make colors
-
     def userChoices(self): 
         while True:
             print("""
