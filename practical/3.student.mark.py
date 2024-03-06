@@ -20,7 +20,7 @@ class Student:
         totalCred = 0
         for course_id, score in self.__score.items():
             if course_id in creditsDict:
-                totalGpa += score * weightDict[course_id]*creditsDict[course_id]
+                totalScore += score * weightDict[course_id]*creditsDict[course_id]
                 totalCred += creditsDict[course_id]
         self.gpa = totalScore / totalCred
         return self.gpa
@@ -98,7 +98,7 @@ class Management:
                 print(f"{student.id} - {student.name}: ")
                 for course_id, score in scores.items():
                     print(f"{course_id}:{m.floor(score)}")
-                student.calGPA(creditsDict=creditsDict, weightsDict=weightsDict)
+                student.calGPA(creditsDict=creditsDict, weightDict=weightsDict)
                 print(f"GPA: {student.gpa}")
 
     # make colors
