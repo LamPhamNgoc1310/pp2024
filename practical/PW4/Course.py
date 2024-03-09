@@ -1,7 +1,9 @@
+# The Course class 
 class Course:
-    def __init__(self, id, name):
-        self.__id = id
+    def __init__(self, id:str, name:str, weight:float, credits:int):
+        self.id = id
         self.name = name
-        # self.studentNumber = studentNumber
+        self.credits = credits
+        self.weight = weight
     def displayInfo(self):
-        print(f" -------------- \nCourse ID: {self.__id} \nCourse Name: {self.name}")
+        print(f"---------{self.id} - {self.name}---------")
