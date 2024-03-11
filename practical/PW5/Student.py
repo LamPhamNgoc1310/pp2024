@@ -20,5 +20,8 @@ class Student:
             if course_id in creditsDict:
                 totalScore += score * weightDict[course_id]*creditsDict[course_id]
                 totalCred += creditsDict[course_id]
-        self.gpa = totalScore / totalCred
+        if totalCred > 0:
+            self.gpa = totalScore / totalCred
+        else:
+            print("The information for the student is incomplete or incorrect.")
         return self.gpa

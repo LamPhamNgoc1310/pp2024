@@ -1,5 +1,7 @@
 import math as m
 import numpy as np
+import zipfile as zf
+from pathlib import Path
 from Course import Course
 from Student import Student
 
@@ -22,7 +24,8 @@ class Management:
 
     # enter the course info
     def inputCourseInfo(self):
-        courseNum = int(input("Please enter the number of courses: "))
+        courseNum = int(input("Please enter the number of courses: ")) #need to ask for try except here
+
         for _ in range(courseNum):
             print("=================================")
             id = input("Please enter the Course ID: ")
@@ -68,6 +71,35 @@ class Management:
                     print(f"{course_id}:{m.floor(score)}")
                 student.calGPA(creditsDict=creditsDict, weightDict=weightsDict)
                 print(f"GPA: {student.gpa}")
+            else:
+                print("Invalid Student Credentials")
+    # this is the how: https://docs.python.org/3/library/zipfile.html 
+    def zipFiles(self):
+        studentsTxt = open('students.txt', 'w')
+        for student in self.students:
+            studentsTxt.writelines(f"{student.id}, {student.name}, {student.dob}") 
+        studentsTxt.close()
+
+        coursesTxt = open('courses.txt', 'w')
+        for course in self.courses:
+            coursesTxt.writelines(f"{course.id}, {course.name}, {course.weight}, {course.credits}")
+        coursesTxt.close()
+
+        marksTxt = open('marks.txt', 'w')
+        for student in self.students:
+            scores = student.getScore()
+            marksTxt.writelines(f"{student.id}, {student.name}")
+            for course_id, score in scores.items():
+                marksTxt.writelines(f",{course_id}:{m.floor(score)}")
+        marksTxt.close()
+
+        path = Path("./student.dat")
+        if path.is_file() != True:
+            bigStudentInfo =  zf.ZipFile("student.dat", "w")
+            bigStudentInfo.write("students.txt")
+            bigStudentInfo.write("courses.txt")
+            bigStudentInfo.write("marks.txt")
+            bigStudentInfo.close()
 
     # make colors
     def userChoices(self): 
@@ -94,25 +126,8 @@ class Management:
             elif choice == "5":
                 self.displayScores()
             elif choice == "0":
+                self.zipFiles()
                 print("Exited")
                 break
             else:
-                print("Invalid choice")
-
-        studentsTxt = open('students.txt', 'w')
-        for student in self.students:
-            studentsTxt.writelines(f"{student.id}, {student.name}, {student.dob}") 
-        studentsTxt.close()
-
-        coursesTxt = open('courses.txt', 'w')
-        for course in self.courses:
-            coursesTxt.writelines(f"{course.id}, {course.name}, {course.weight}, {course.credits}")
-        coursesTxt.close()
-
-        marksTxt = open('marks.txt', 'w')
-        for student in self.students:
-            scores = student.getScore()
-            marksTxt.writelines(f"{student.id}, {student.name}:")
-            for course_id, score in scores.items():
-                marksTxt.writelines(f"{course_id}:{m.floor(score)}")
-        marksTxt.close()
+                print("Invalid choice") 
